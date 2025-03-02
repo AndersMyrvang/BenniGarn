@@ -12,12 +12,12 @@ export default function Home() {
 
         <section className={styles.grid}>
             {[
-            { src: "photo1.jpg", text: "Photo 1", link: "/page1" },
-            { src: "photo2.jpg", text: "Photo 2", link: "/page2" },
-            { src: "photo3.jpg", text: "Photo 3", link: "/page3" },
-            { src: "photo4.jpg", text: "Photo 4", link: "/page4" },
-            { src: "photo5.jpg", text: "Photo 5", link: "/page5" },
-            { src: "photo6.jpg", text: "Photo 6", link: "/page6" },
+            { src: "../../../test.png", text: "Photo 1", link: "/page1" },
+            { src: "../../../test.png", text: "Photo 2", link: "/page2" },
+            { src: "../../../test.png", text: "Photo 3", link: "/page3" },
+            { src: "../../../test.png", text: "Photo 4", link: "/page4" },
+            { src: "../../../test.png", text: "Photo 5", link: "/page5" },
+            { src: "../../../test.png", text: "Photo 6", link: "/page6" },
             ].map((item, index) => (
             <a key={index} href={item.link} className={styles.gridItem}>
                 <img src={item.src} alt={item.text} className={styles.photo} />
