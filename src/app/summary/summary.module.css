@@ -1,0 +1,77 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: rgb(250, 171, 190);
+    font-family: sans-serif;
+  }
+  
+  .hero {
+    text-align: center;
+    background-image: url("../../../public/h1yarn.jpeg");
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+    font-size: 4rem;
+    margin: 1rem 0;
+    color: white;
+    text-shadow: 2px 2px 4px rgb(172, 21, 59);
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    width: 100%;
+    margin-top: 2rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 1.5rem 0 0.5rem;
+    color: rgb(172, 21, 59);
+  }
+  
+  .text {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  .image {
+    width: 300px;
+    height: auto;
+    margin: 1rem auto;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .button {
+    margin-top: 2rem;
+    padding: 1rem 3rem;
+    background-color: rgb(251, 115, 149);
+    border: none;
+    border-radius: 1rem;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(251, 100, 138, 1);
+    width: 100%;
+  }
+  
+  .button:hover {
+    background-color: rgb(251, 100, 138);
+  }
+  

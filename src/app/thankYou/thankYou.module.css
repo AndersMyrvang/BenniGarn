@@ -1,0 +1,51 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: rgb(250, 171, 190);
+    font-family: sans-serif;
+  }
+  
+  .hero {
+    text-align: center;
+    background-image: url("../../../public/h1yarn.jpeg");
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+    font-size: 3rem;
+    margin: 2rem 0;
+    color: white;
+    text-shadow: 2px 2px 4px rgb(172, 21, 59);
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .text {
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 2rem;
+    max-width: 600px;
+  }
+  
+  .button {
+    padding: 1rem 3rem;
+    background-color: rgb(251, 115, 149);
+    border: none;
+    border-radius: 1rem;
+    font-size: 1.2rem;
+    color: white;
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(251, 100, 138, 1);
+  }
+  
+  .button:hover {
+    background-color: rgb(251, 100, 138);
+  }
+  

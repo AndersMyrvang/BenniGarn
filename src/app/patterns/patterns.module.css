@@ -1,0 +1,103 @@
+/* bredde.module.css */
+.container {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: sans-serif;
+    background-color: rgb(250, 171, 190);
+  }
+  
+  .hero {
+    text-align: center;
+    background-image: url("../../../public/h1yarn.jpeg");
+    border-radius: 0;
+    margin: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+    font-size: 4rem;
+    margin: 1rem 0;
+    color: white;
+    text-shadow: 2px 2px 4px rgb(172, 21, 59);
+  }
+  
+  .subtitle {
+    font-size: 1.5rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgb(172, 21, 59);
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0.1rem;
+    max-width: 50vw;
+    margin: 0 auto;
+  }
+  
+  .button {
+    padding: 2rem 9rem;
+    border: none;
+    border-radius: 1rem;
+    background-color: rgb(251, 115, 149);
+    cursor: pointer;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(251, 100, 138, 1);
+    box-shadow: 2px 2px 4px rgba(251, 100, 138, 1);
+    font-size: 2rem;
+  }
+  
+  .button:hover {
+    background-color: rgb(251, 100, 138);
+  }
+  
+  /* --- NEW GRID STYLES --- */
+  .grid {
+    display: grid;
+    /* Force exactly 3 columns, each taking up an equal fraction of available space */
+    grid-template-columns: repeat(3, 1fr);
+    /* If you want a fixed height for rows, you could do grid-auto-rows, 
+       but usually letting content size the row is fine. */
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  
+  .gridItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #ffffff; /* White background for contrast */
+    border-radius: 8px;
+    text-decoration: none; /* Remove underline on links */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden; /* So any hover transformations don’t overflow */
+  }
+  
+  .gridItem:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .photo {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+  }
+  
+  .text {
+    margin: 1rem 0;
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
