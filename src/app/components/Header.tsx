@@ -85,6 +85,7 @@ export default function Header() {
                     <div key={order.id} className={styles.orderItem}>
                       <p><strong>{order.pattern}</strong></p>
                       <p>{order.width} – {order.length} cm</p>
+                      <p>Status: <em>{order.status}</em></p>
                     </div>
                   ))
                 )}
