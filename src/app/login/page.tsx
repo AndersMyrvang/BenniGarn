@@ -12,6 +12,7 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
   sendEmailVerification,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import styles from "./login.module.css";
 
@@ -88,6 +89,21 @@ export default function Home() {
       alert(error.message);
     }
   };
+
+  const handleForgotPassword = async () => {
+    if (!email) {
+      alert("Skriv inn e-posten din først");
+      return;
+    }
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      alert("En e-post for tilbakestilling av passord er sendt!");
+    } catch (error: any) {
+      alert(error.message);
+    }
+  };
+
 
   const handleSignUpWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -166,6 +182,18 @@ export default function Home() {
               required
             />
           </div>
+
+          {!isSignup && (
+            <button
+              type="button"
+              onClick={handleForgotPassword}
+              className={styles.linkButton}
+              style={{ marginTop: "0.5rem" }}
+            >
+              Glemt passord?
+            </button>
+          )}
+
 
           <button type="submit" className={styles.button}>
             {isSignup ? "Opprett konto" : "Logg inn"}
