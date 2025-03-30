@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { db } from "@/firebase/config";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { auth } from "@/firebase/config";
 import {
@@ -59,10 +61,24 @@ export default function Home() {
   const handleSignUpWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     try {
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+  
+      // Sjekk om bruker finnes i Firestore allerede
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
+  
+      if (!userSnap.exists()) {
+        // Hvis ny bruker – legg til i Firestore
+        await setDoc(userRef, {
+          displayName: user.displayName || "",
+          email: user.email,
+          isAdmin: false,
+        });
+      }
+  
       alert("Logget inn med Google!");
       router.push("/");
-      // Eventuelt omdiriger brukeren videre
     } catch (error: any) {
       alert(error.message);
     }
