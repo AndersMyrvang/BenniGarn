@@ -7,20 +7,33 @@ import styles from "./Header.module.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth, db } from "@/firebase/config";
-import { collection, query, where, onSnapshot, orderBy } from "firebase/firestore";
+import { collection, query, where, onSnapshot, orderBy, doc, getDoc } from "firebase/firestore";
+
 
 export default function Header() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [orders, setOrders] = useState<any[]>([]);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
+
+      if (currentUser) {
+        // Sjekk om brukeren er admin
+        const userRef = doc(db, "users", currentUser.uid);
+        const snap = await getDoc(userRef);
+        setIsAdmin(snap.exists() && snap.data().isAdmin === true);
+      } else {
+        setIsAdmin(false);
+      }
     });
+
     return () => unsubscribe();
   }, []);
+
 
   // Fetch user's orders from Firestore
   useEffect(() => {
@@ -68,6 +81,14 @@ export default function Header() {
       </Link>
 
       <div className={styles.rightButtons}>
+        {isAdmin && (
+          <button
+            className={styles.ordersBtn}
+            onClick={() => router.push("/admin")}
+          >
+            Alle bestillinger
+          </button>
+        )}
         {user && (
           <div className={styles.dropdown}>
             <button
