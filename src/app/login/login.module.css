@@ -131,4 +131,23 @@
   .terms a:hover {
     color: #2563eb;     /* ~ text-blue-600 */
   }
+
+  .linkButton {
+    background: none;
+    border: none;
+    color: rgb(172, 21, 59);
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: bold;
+    padding-left: 0.3rem;
+  }
+  .linkButton:hover {
+    color: rgb(251, 100, 138);
+  }
+  .linkButton:focus {
+    outline: none;
+  }
+  .linkButton:active {
+    color: rgb(251, 100, 138);
+  }  
   
