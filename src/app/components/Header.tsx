@@ -6,26 +6,46 @@ import { useRouter } from "next/navigation";
 import styles from "./Header.module.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from "@/firebase/config";
+import { auth, db } from "@/firebase/config";
+import { collection, query, where, onSnapshot, orderBy } from "firebase/firestore";
 
 export default function Header() {
   const router = useRouter();
-  // Hold på info om innlogget bruker
   const [user, setUser] = useState<any>(null);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [orders, setOrders] = useState<any[]>([]);
 
   useEffect(() => {
-    // Lytt til endringer i innloggingsstatus
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
     return () => unsubscribe();
   }, []);
 
-  // Håndter utlogging
+  // Fetch user's orders from Firestore
+  useEffect(() => {
+    if (!user) return;
+
+    const q = query(
+      collection(db, "orders"),
+      where("email", "==", user.email),
+      orderBy("createdAt", "desc")
+    );
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const fetchedOrders = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setOrders(fetchedOrders);
+    });
+
+    return () => unsubscribe();
+  }, [user]);
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      // Send brukeren til login-siden etter utlogging
       router.push("/");
       alert("Logget ut");
     } catch (error) {
@@ -40,42 +60,49 @@ export default function Header() {
       console.error("Feil ved innlogging:", error);
     }
   };
-  const [showDropdown, setShowDropdown] = useState(false);
 
   return (
     <header className={styles.header}>
       <Link href="/" className={styles.homeBtn}>
-      <i className="bi bi-house-heart"></i>
+        <i className="bi bi-house-heart"></i>
       </Link>
-      
+
       <div className={styles.rightButtons}>
-        <div className={styles.dropdown}>
-          <button 
-            className={styles.ordersBtn}
-            onClick={() => setShowDropdown(!showDropdown)}
-          >
-            Mine bestillinger
-          </button>
-          {showDropdown && (
-            <div className={styles.dropdownContent}>
-              {/* Placeholder for orders */}
-              <p>Ingen bestillinger ennå</p>
-            </div>
-          )}
-        </div>
-        
-         {/* Hvis bruker er logget inn, vis "Logg ut"-knapp, ellers "Logg inn"-link */}
-         {user ? (
+        {user && (
+          <div className={styles.dropdown}>
+            <button
+              className={styles.ordersBtn}
+              onClick={() => setShowDropdown(!showDropdown)}
+            >
+              Mine bestillinger
+            </button>
+            {showDropdown && (
+              <div className={styles.dropdownContent}>
+                {orders.length === 0 ? (
+                  <p>Ingen bestillinger ennå</p>
+                ) : (
+                  orders.map((order) => (
+                    <div key={order.id} className={styles.orderItem}>
+                      <p><strong>{order.pattern}</strong></p>
+                      <p>{order.width} – {order.length} cm</p>
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
+        {user ? (
           <button onClick={handleLogout} className={styles.loginBtn}>
             Logg ut
           </button>
         ) : (
           <button onClick={handleLogin} className={styles.loginBtn}>
-          Logg inn
-        </button>
+            Logg inn
+          </button>
         )}
       </div>
     </header>
-  )
+  );
 }
-

@@ -64,3 +64,11 @@
 .loginBtn:hover {
     background-color: rgb(251, 100, 138);
 }
+
+.orderItem {
+  background-color: #fff;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ccc;
+  text-align: left;
+  font-size: 0.9rem;
+}
