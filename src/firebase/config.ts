@@ -16,10 +16,16 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
+// Initialize core app
 const app = initializeApp(firebaseConfig);
+
+// Initialize services
 const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
+const functions = getFunctions(app);
+
+// Optional: only available in browser
 let analytics;
 let performance;
 
@@ -33,6 +39,5 @@ if (typeof window !== 'undefined') {
   performance = getPerformance(app);
 }
 
-const functions = getFunctions(app);
-
-export { auth, db, storage, analytics, functions, performance };
+// Export everything needed in the app
+export { app, auth, db, storage, analytics, functions, performance };
