@@ -19,7 +19,7 @@ export default function Home() {
 
   const handleButtonClick = (item: { src: string; text: string }) => {
     setOrder((prev) => ({ ...prev, pattern: item }));
-    router.push("/size");
+    router.push("/colours");
   };
 
   return (

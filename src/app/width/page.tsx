@@ -9,12 +9,9 @@ export default function Home() {
   const router = useRouter();
   const { setOrder } = useOrder();
   const items = [
-    { src: "../../../test.png", text: "Photo 1" },
-    { src: "../../../test.png", text: "Photo 2" },
-    { src: "../../../test.png", text: "Photo 3" },
-    { src: "../../../test.png", text: "Photo 4" },
-    { src: "../../../test.png", text: "Photo 5" },
-    { src: "../../../test.png", text: "Photo 6" },
+    { src: "../../../6tråder.jpg", text: "6 tråder" },
+    { src: "../../../8tråder.jpg", text: "8 tråder" },
+    { src: "../../../10tråder.jpg", text: "10 tråder" },
   ];
 
   const handleButtonClick =(item: { src: string; text: string }) => {
