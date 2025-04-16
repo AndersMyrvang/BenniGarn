@@ -11,8 +11,8 @@ import React, { JSX } from "react";
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'ExPhil Exam Project',
-  description: 'A platform for taking exams to practice for Ex.Phil',
+  title: 'BenniGarn',
+  description: 'A platform for ordering bracelets from Benni',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }): JSX.Element {
