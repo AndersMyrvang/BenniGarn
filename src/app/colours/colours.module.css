@@ -83,7 +83,24 @@
   .gridItem:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
   }
+
+/* Når en farge er valgt */
+.selected {
+  /* Tykkere ramme med kontrastfarge */
+  border: 3px solid #f7368d; /* pink border, bytt til ønsket farge */
+  /* Litt ekstra løfting */
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Låste ruter (overskredet limit) */
+.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
   
   /* Constrain the image height to keep items small */
   .photo {
