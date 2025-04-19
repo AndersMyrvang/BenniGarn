@@ -1,3 +1,4 @@
+// src/app/admin/page.tsx
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -10,16 +11,34 @@ import {
   onSnapshot,
   updateDoc,
   query,
-  orderBy
+  orderBy,
+  Timestamp,
 } from "firebase/firestore";
-import styles from "./admin.module.css"; 
+import styles from "./admin.module.css";
+
+type OrderDoc = {
+  id: string;
+  user: string;
+  email: string;
+  width: string;
+  widthSrc: string;
+  pattern: string;
+  patternSrc: string;
+  colours: string[];
+  coloursSrc: string[];
+  length: number | string;
+  status: string;
+  createdAt: Timestamp;
+};
 
 export default function AdminPage() {
   const [isAdmin, setIsAdmin] = useState(false);
-  const [orders, setOrders] = useState<any[]>([]);
+  const [orders, setOrders] = useState<OrderDoc[]>([]);
+  const [selectedOrder, setSelectedOrder] = useState<OrderDoc | null>(null);
   const router = useRouter();
   const user = auth.currentUser;
 
+  // 1) Check admin rights
   useEffect(() => {
     const checkAdmin = async () => {
       if (!user) return router.push("/");
@@ -27,7 +46,7 @@ export default function AdminPage() {
       const userRef = doc(db, "users", user.uid);
       const snap = await getDoc(userRef);
 
-      if (!snap.exists() || !snap.data().isAdmin) {
+      if (!snap.exists() || !(snap.data() as any).isAdmin) {
         alert("Du har ikke tilgang til denne siden.");
         router.push("/");
         return;
@@ -39,18 +58,36 @@ export default function AdminPage() {
     checkAdmin();
   }, [user, router]);
 
+  // 2) Subscribe to orders
   useEffect(() => {
     if (!isAdmin) return;
 
     const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const fetched = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      const fetched = snapshot.docs.map((d) => {
+        const data = d.data() as any;
+        return {
+          id: d.id,
+          user: data.user,
+          email: data.email,
+          width: data.width,
+          widthSrc: data.widthSrc,
+          pattern: data.pattern,
+          patternSrc: data.patternSrc,
+          colours: data.colours || [],
+          coloursSrc: data.coloursSrc || [],
+          length: data.length,
+          status: data.status,
+          createdAt: data.createdAt,
+        };
+      });
       setOrders(fetched);
     });
 
     return () => unsubscribe();
   }, [isAdmin]);
 
+  // 3) Change status
   const handleStatusChange = async (orderId: string, newStatus: string) => {
     const orderRef = doc(db, "orders", orderId);
     await updateDoc(orderRef, { status: newStatus });
@@ -61,32 +98,112 @@ export default function AdminPage() {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Admin – Bestillinger</h1>
-  
-      <div>
-        {orders.map((order) => (
-          <div key={order.id} className={styles.orderCard}>
-            <p className={styles.orderText}>
-              <strong>{order.user}</strong> – {order.email}
-            </p>
-            <p className={styles.orderText}>
-              Bredde: {order.width} | Mønster: {order.pattern} | Lengde: {order.length} cm
-            </p>
-            <p className={styles.orderText}>
-              Status:
-              <select
-                className={styles.statusSelect}
-                value={order.status}
-                onChange={(e) => handleStatusChange(order.id, e.target.value)}
-              >
-                <option value="bestilt">Bestilt</option>
-                <option value="produksjon">Under produksjon</option>
-                <option value="ferdig">Ferdig</option>
-              </select>
-            </p>
-          </div>
-        ))}
+
+      <div className={styles.list}>
+        {orders.map((o) => {
+          const date = o.createdAt.toDate().toLocaleString("no-NB");
+          return (
+            <div
+              key={o.id}
+              className={styles.orderCard}
+              onClick={() => setSelectedOrder(o)}
+            >
+              <p className={styles.orderText}>
+                <strong>{o.user}</strong> – {o.email}
+              </p>
+              <p className={styles.orderText}>
+                <em>Bestilt:</em> {date}
+              </p>
+              <p className={styles.orderText}>
+                Status:&nbsp;
+                <select
+                  className={styles.statusSelect}
+                  value={o.status}
+                  onChange={(e) =>
+                    handleStatusChange(o.id, e.target.value)
+                  }
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <option value="bestilt">Bestilt</option>
+                  <option value="produksjon">Under produksjon</option>
+                  <option value="ferdig">Ferdig</option>
+                </select>
+              </p>
+            </div>
+          );
+        })}
       </div>
+
+      {/* 4) Modal for detaljer */}
+      {selectedOrder && (
+        <div
+          className={styles.modalOverlay}
+          onClick={() => setSelectedOrder(null)}
+        >
+          <div
+            className={styles.modal}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className={styles.closeBtn}
+              onClick={() => setSelectedOrder(null)}
+            >
+              ×
+            </button>
+
+            <h2>Ordredetaljer</h2>
+            <p>
+              <strong>Bestilt:</strong>{" "}
+              {selectedOrder.createdAt.toDate().toLocaleString("no-NB")}
+            </p>
+
+            {/* Bredde */}
+            <section className={styles.detailSection}>
+              <h3>Bredde</h3>
+              <img
+                src={selectedOrder.widthSrc}
+                alt={selectedOrder.width}
+                className={styles.detailImage}
+              />
+              <p>{selectedOrder.width}</p>
+            </section>
+
+            {/* Mønster */}
+            <section className={styles.detailSection}>
+              <h3>Mønster</h3>
+              <img
+                src={selectedOrder.patternSrc}
+                alt={selectedOrder.pattern}
+                className={styles.detailImage}
+              />
+              <p>{selectedOrder.pattern}</p>
+            </section>
+
+            {/* Farger */}
+            <section className={styles.detailSection}>
+              <h3>Farge(r)</h3>
+              <div className={styles.colourList}>
+                {selectedOrder.coloursSrc.map((src, i) => (
+                  <div key={i} className={styles.colourItem}>
+                    <img
+                      src={src}
+                      alt={selectedOrder.colours[i]}
+                      className={styles.detailImage}
+                    />
+                    <p>{selectedOrder.colours[i]}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Lengde */}
+            <section className={styles.detailSection}>
+              <h3>Lengde</h3>
+              <p>{selectedOrder.length} cm</p>
+            </section>
+          </div>
+        </div>
+      )}
     </div>
   );
-  
 }

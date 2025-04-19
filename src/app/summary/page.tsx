@@ -23,10 +23,18 @@ export default function SummaryPage() {
       await addDoc(collection(db, "orders"), {
         user: user.displayName,
         email: user.email,
+
+        // Tekstfeltene
         width: order.width?.text,
         pattern: order.pattern?.text,
         colours: order.colours?.map((c) => c.text) || [],
         length: order.length,
+
+        // URL-feltene for bilder
+        widthSrc: order.width?.src,
+        patternSrc: order.pattern?.src,
+        coloursSrc: order.colours?.map((c) => c.src) || [],
+
         status: "bestilt",
         createdAt: serverTimestamp(),
       });
