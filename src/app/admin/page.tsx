@@ -97,8 +97,9 @@ export default function AdminPage() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Admin – Bestillinger</h1>
-
+        <section className={styles.hero}>
+        <h1 className={styles.title}>Admin - Bestillinger</h1>
+      </section>
       <div className={styles.list}>
         {orders.map((o) => {
           const date = o.createdAt.toDate().toLocaleString("no-NB");

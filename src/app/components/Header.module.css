@@ -71,4 +71,67 @@
   border-bottom: 1px solid #ccc;
   text-align: left;
   font-size: 0.9rem;
+  cursor: pointer;
 }
+
+.orderItem:hover {
+  background-color: rgb(251, 115, 149);
+  color: white;
+}
+
+.orderItem:hover .orderDetails {
+  display: block;
+}
+
+/* Modal backdrop */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal container */
+.modal {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 90%;
+  max-height: 90%;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Close button */
+.closeBtn {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Detail sections */
+.detailSection {
+  margin-top: 1rem;
+}
+.detailImage {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+}
+.colourList {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.colourItem {
+  text-align: center;
+}
+
