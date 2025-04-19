@@ -74,4 +74,27 @@
   .button:hover {
     background-color: rgb(251, 100, 138);
   }
+
+  /* Lagt til for farge‐oversikten */
+.coloursContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.colourItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.colourImage {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
   
