@@ -1,4 +1,3 @@
-// src/app/admin/page.tsx
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -26,6 +25,7 @@ type OrderDoc = {
   patternSrc: string;
   colours: string[];
   coloursSrc: string[];
+  mostColour?: string;
   length: number | string;
   status: string;
   createdAt: Timestamp;
@@ -76,6 +76,7 @@ export default function AdminPage() {
           patternSrc: data.patternSrc,
           colours: data.colours || [],
           coloursSrc: data.coloursSrc || [],
+          mostColour: data.mostColour || "",
           length: data.length,
           status: data.status,
           createdAt: data.createdAt,
@@ -97,8 +98,8 @@ export default function AdminPage() {
 
   return (
     <div className={styles.container}>
-        <section className={styles.hero}>
-        <h1 className={styles.title}>Admin - Bestillinger</h1>
+      <section className={styles.hero}>
+        <h1 className={styles.title}>Admin – Bestillinger</h1>
       </section>
       <div className={styles.list}>
         {orders.map((o) => {
@@ -135,7 +136,7 @@ export default function AdminPage() {
         })}
       </div>
 
-      {/* 4) Modal for detaljer */}
+      {/* Modal for detaljer */}
       {selectedOrder && (
         <div
           className={styles.modalOverlay}
@@ -155,7 +156,9 @@ export default function AdminPage() {
             <h2>Ordredetaljer</h2>
             <p>
               <strong>Bestilt:</strong>{" "}
-              {selectedOrder.createdAt.toDate().toLocaleString("no-NB")}
+              {selectedOrder.createdAt
+                .toDate()
+                .toLocaleString("no-NB")}
             </p>
 
             {/* Bredde */}
@@ -180,7 +183,7 @@ export default function AdminPage() {
               <p>{selectedOrder.pattern}</p>
             </section>
 
-            {/* Farger */}
+            {/* Farge(r) */}
             <section className={styles.detailSection}>
               <h3>Farge(r)</h3>
               <div className={styles.colourList}>
@@ -195,6 +198,12 @@ export default function AdminPage() {
                   </div>
                 ))}
               </div>
+            </section>
+
+            {/* Mest av */}
+            <section className={styles.detailSection}>
+              <h3>Mest av</h3>
+              <p>{selectedOrder.mostColour || "Ikke angitt"}</p>
             </section>
 
             {/* Lengde */}

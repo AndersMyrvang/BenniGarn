@@ -1,13 +1,21 @@
+// src/app/page.tsx
 "use client";
 
 import React from "react";
 import { useRouter } from "next/navigation";
 import styles from "./home.module.css";
+import { auth } from "@/firebase/config";
 
 export default function Home() {
   const router = useRouter();
 
   const handleButtonClick = () => {
+    const user = auth.currentUser;
+    if (!user) {
+      alert("Du må være logget inn for å bestille. Logg inn først.");
+      router.push("/login");
+      return;
+    }
     router.push("/width");
   };
 
@@ -25,7 +33,8 @@ export default function Home() {
         </button>
         <p className={styles.disclaimer}>
           Hvis du ved noen av stegene velger makers choice kan det forekomme nye mønstre og farger som ikke blir vist på siden.
-          Dette er fordi jeg hele tiden leter etter nye garn og patterns. </p>
+          Dette er fordi jeg hele tiden leter etter nye garn og patterns.
+        </p>
       </section>
     </div>
   );

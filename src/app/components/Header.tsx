@@ -1,4 +1,3 @@
-// src/app/components/Header.tsx
 "use client";
 
 import Link from "next/link";
@@ -27,6 +26,7 @@ type Order = {
   patternSrc?: string;
   colours: string[];
   coloursSrc?: string[];
+  mostColour?: string;
   length: number | string;
   status: string;
   createdAt: Timestamp | { toDate: () => Date };
@@ -145,7 +145,6 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Modal for mine bestillinger */}
       {selectedOrder && (
         <div
           className={styles.modalOverlay}
@@ -207,6 +206,11 @@ export default function Header() {
                   </div>
                 ))}
               </div>
+            </section>
+
+            <section className={styles.detailSection}>
+              <h3>Mest av</h3>
+              <p>{selectedOrder.mostColour || "Ikke angitt"}</p>
             </section>
 
             <section className={styles.detailSection}>

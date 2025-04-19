@@ -24,13 +24,12 @@ export default function SummaryPage() {
         user: user.displayName,
         email: user.email,
 
-        // Tekstfeltene
         width: order.width?.text,
         pattern: order.pattern?.text,
         colours: order.colours?.map((c) => c.text) || [],
+        mostColour: order.mostColour || "",
         length: order.length,
 
-        // URL-feltene for bilder
         widthSrc: order.width?.src,
         patternSrc: order.pattern?.src,
         coloursSrc: order.colours?.map((c) => c.src) || [],
@@ -45,73 +44,75 @@ export default function SummaryPage() {
     }
   };
 
-  return (
-    <div className={styles.container}>
-      <section className={styles.hero}>
-        <h1 className={styles.title}>Sammendrag</h1>
-      </section>
+    return (
+        <div className={styles.container}>
+            <section className={styles.hero}>
+                <h1 className={styles.title}>Sammendrag</h1>
+            </section>
 
-      <section className={styles.content}>
-        <div className={styles.card}>
-          {/* Bredde */}
-          <h2 className={styles.sectionTitle}>Bredde</h2>
-          {order.width && (
-            <>
-              <img
-                src={order.width.src}
-                alt="Bredde"
-                className={styles.image}
-              />
-              <p className={styles.text}>{order.width.text}</p>
-            </>
-          )}
+            <section className={styles.content}>
+                <div className={styles.card}>
+                    {/* Bredde */}
+                    <h2 className={styles.sectionTitle}>Bredde</h2>
+                    {order.width && (
+                        <>
+                            <img
+                                src={order.width.src}
+                                alt="Bredde"
+                                className={styles.image}
+                            />
+                            <p className={styles.text}>{order.width.text}</p>
+                        </>
+                    )}
 
-          {/* Mønster */}
-          <h2 className={styles.sectionTitle}>Mønster</h2>
-          {order.pattern && (
-            <>
-              <img
-                src={order.pattern.src}
-                alt="Mønster"
-                className={styles.image}
-              />
-              <p className={styles.text}>{order.pattern.text}</p>
-            </>
-          )}
+                    {/* Mønster */}
+                    <h2 className={styles.sectionTitle}>Mønster</h2>
+                    {order.pattern && (
+                        <>
+                            <img
+                                src={order.pattern.src}
+                                alt="Mønster"
+                                className={styles.image}
+                            />
+                            <p className={styles.text}>{order.pattern.text}</p>
+                        </>
+                    )}
 
-          {/* Farge(r) */}
-          <h2 className={styles.sectionTitle}>Farge(r)</h2>
-          {order.colours && order.colours.length > 0 ? (
-            <div className={styles.coloursContainer}>
-              {order.colours.map((c, i) => (
-                <div key={i} className={styles.colourItem}>
-                  <img
-                    src={c.src}
-                    alt={c.text}
-                    className={styles.colourImage}
-                  />
-                  <p className={styles.text}>{c.text}</p>
+                    {/* Farge(r) */}
+                    <h2 className={styles.sectionTitle}>Farge(r)</h2>
+                    {order.colours?.length ? (
+                        <div className={styles.coloursContainer}>
+                            {order.colours.map((c, i) => (
+                                <div key={i} className={styles.colourItem}>
+                                    <img src={c.src} alt={c.text} className={styles.colourImage} />
+                                    <p className={styles.text}>{c.text}</p>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p className={styles.text}>Ingen farger valgt</p>
+                    )}
+
+                    {/* Hvilken farge vil du ha mest av? */}
+                    <h2 className={styles.sectionTitle}>Preferanser</h2>
+                    <p className={styles.text}>
+                        {order.mostColour ?? "Ikke angitt"}
+                    </p>
+
+                    {/* Lengde */}
+                    <h2 className={styles.sectionTitle}>Lengde</h2>
+                    <img
+                        src="/measure_illustration.png"
+                        alt="Mål håndledd"
+                        className={styles.image}
+                    />
+                    <p className={styles.text}>{order.length} cm</p>
+
+                    <button className={styles.button} onClick={handleOrder}>
+                        Bestill
+                    </button>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <p className={styles.text}>Ingen farger valgt</p>
-          )}
-
-          {/* Lengde */}
-          <h2 className={styles.sectionTitle}>Lengde</h2>
-          <img
-            src="/measure_illustration.png"
-            alt="Mål håndledd"
-            className={styles.image}
-          />
-          <p className={styles.text}>{order.length} cm</p>
-
-          <button className={styles.button} onClick={handleOrder}>
-            Bestill
-          </button>
+            </section>
         </div>
-      </section>
-    </div>
-  );
+    );
 }

@@ -5,7 +5,8 @@ type Order = {
    width?: { src: string; text: string };
    pattern?: { src: string; text: string };
    length?: string;
-   colours?: { src: string; text: string }[];  
+   colours?: { src: string; text: string }[];
+   mostColour?: string;  
 };
 
 type OrderContextType = {
