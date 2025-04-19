@@ -18,11 +18,14 @@ export default function Home() {
       </section>
       <section className={styles.content}>
         <h4 className={styles.subtitle}>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos sequi ratione cum maxime dolore nobis quos dicta eos, ab cumque tenetur dolorum corrupti cupiditate debitis possimus assumenda, commodi autem nesciunt?
+          Her kan du bestille et armbånd med ønsket bredde, mønster og farger.
         </h4>
         <button className={styles.button} onClick={handleButtonClick}>
           Bestill armbånd
         </button>
+        <p className={styles.disclaimer}>
+          Hvis du ved noen av stegene velger makers choice kan det forekomme nye mønstre og farger som ikke blir vist på siden.
+          Dette er fordi jeg hele tiden leter etter nye garn og patterns. </p>
       </section>
     </div>
   );
