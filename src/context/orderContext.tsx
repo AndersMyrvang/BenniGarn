@@ -2,9 +2,10 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 type Order = {
-  width?: { src: string; text: string };
-  pattern?: { src: string; text: string };
-  length?: string;
+   width?: { src: string; text: string };
+   pattern?: { src: string; text: string };
+   length?: string;
+   colours?: { src: string; text: string }[];  
 };
 
 type OrderContextType = {
@@ -21,7 +22,9 @@ export const useOrder = () => {
 };
 
 export const OrderProvider = ({ children }: { children: ReactNode }) => {
-  const [order, setOrder] = useState<Order>({});
+  const [order, setOrder] = useState<Order>({
+    colours: [], 
+  });
   return (
     <OrderContext.Provider value={{ order, setOrder }}>
       {children}
