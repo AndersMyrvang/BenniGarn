@@ -19,7 +19,7 @@ import styles from "./login.module.css";
 export default function Home() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
-  const [isSignup, setIsSignup] = useState(false); // Toggle mode
+  const [isSignup, setIsSignup] = useState(false);
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -132,7 +132,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-        <h1 className={styles.title}>ExPhil App</h1>
+        <h1 className={styles.title}>Bennigarn</h1>
         <h2 className={styles.subtitle}>{isSignup ? "Opprett bruker" : "Logg inn"}</h2>
 
         <form onSubmit={isSignup ? handleSignUpWithEmail : handleLoginWithEmail} className={styles.form}>
