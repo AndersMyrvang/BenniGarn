@@ -19,7 +19,7 @@
     "firebase": "^12.11.0",
     "firebase-admin": "^13.7.0",
     "next": "16.2.2",
-    "postcss": "8.5.6",
+    "postcss": "8.5.8",
     "react": "^19.2.0",
     "react-dom": "^19.2.4",
     "tailwindcss": "4.2.2",
@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.24",
-    "postcss": "^8.5.6",
+    "postcss": "^8.5.8",
     "tailwindcss": "^4.2.2"
   },
   "description": "This is a starter template for building Next.js 13 applications with Firebase. It provides a solid foundation for developing modern web applications with server-side rendering, authentication, and real-time data synchronization.",
